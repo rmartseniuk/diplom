@@ -10,7 +10,7 @@ import ua.nure.martseniuk.diplom.domain.User;
 import ua.nure.martseniuk.diplom.security.repository.UserRepository;
 
 /**
- * Created by Roman_Martseniuk on 5/28/2017.
+ * @author Roman_Martseniuk.
  */
 @Service
 public class UserServiceImpl implements UserService {

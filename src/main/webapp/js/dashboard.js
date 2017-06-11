@@ -174,17 +174,17 @@ function initStatisticPage() {
         }
         switch (whichcircle) {
             case "first":
-                animatecircle.call($("#first-circle"), beforevalue, (item.converted / 730).toFixed(2), (sum / 730), item.title);
+                animatecircle.call($("#first-circle"), beforevalue, (item.converted / 720).toFixed(2), (sum / 730), item.title);
                 circle = 1;
                 $("#first-circle").data({"item": item, "sum": sum});
                 break;
             case "second":
-                animatecircle.call($("#second-circle"), beforevalue, (item.converted / 30.41666667).toFixed(1), (sum / 30.41666667), item.title);
+                animatecircle.call($("#second-circle"), beforevalue, (item.converted / 30).toFixed(1), (sum / 30.41666667), item.title);
                 circle = 2;
                 $("#second-circle").data({"item": item, "sum": sum});
                 break;
             case "third":
-                animatecircle.call($("#third-circle"), beforevalue, Math.round(item.converted * 1.2) * 10, (sum * 1.2) * 10, item.title);
+                animatecircle.call($("#third-circle"), beforevalue, Math.round(item.converted * 1.2) * 10, (sum * 12), item.title);
                 circle = 3;
                 $("#third-circle").data({"item": item, "sum": sum});
                 break;
@@ -735,6 +735,7 @@ function initSavingsSlider() {
             lower: [
                 new Link({
                     target: function (value) {
+                        var persent1 = Math.round(value / (incomesSumMonth - expensesSumMonth + 0.001) * 100);
                         $("#savings-slider").data({"checkedPercent": Math.round(value / (incomesSumMonth - expensesSumMonth + 0.001) * 100) / 100});
                         $(".noUi-handle").attr({percent: Math.round(value / (incomesSumMonth - expensesSumMonth + 0.001) * 100) + "%"})
                     }, format: {decimals: 0}

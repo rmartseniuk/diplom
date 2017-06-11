@@ -7,15 +7,17 @@
     <link rel="stylesheet" type="text/css" href="css/launch.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/animation.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">-->
     <style>
-        #bubble, #indicator, #save, #piggyicon, #rublesign, .arrowup, .arrowdown, .incomes-sprite-title, .close-sign, .modal-save-icon,
+        #bubble, #bubble-message, #indicator, #save, #piggyicon, #rublesign, .arrowup, .arrowdown, .incomes-sprite-title, .close-sign, .modal-save-icon,
         #modaldeletecross, .initicons-arrow, .expenses-sprite-title, .savings-sprite-title, .triangle, .noUi-handle, .noUi-handle:after {
             background-image: url("images/sprites.png");
             background-size: 538px 84px;
         }
 
         @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi) {
-            #bubble, #indicator, #save, #piggyicon, #rublesign, .arrowup, .arrowdown, .incomes-sprite-title, .close-sign, .modal-save-icon,
+            #bubble, #bubble-message, #indicator, #save, #piggyicon, #rublesign, .arrowup, .arrowdown, .incomes-sprite-title, .close-sign, .modal-save-icon,
             #modaldeletecross, .initicons-arrow, .expenses-sprite-title, .savings-sprite-title, .triangle, .noUi-handle, .noUi-handle:after {
                 background-image: url("images/sprites@2x.png");
             }
@@ -33,8 +35,7 @@
             <div id="bubble">
                 <div id="indicator"></div>
             </div>
-            <div id="bubble_message">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            <div id="bubble-message" style="display: block">
             </div>
         </div>
         <div id="logo_statistic"></div>
@@ -155,17 +156,17 @@
                 <input type="text" name="savingsvalue" id="savingsvalue" data-a-sep=" " data-v-min="0"
                        data-v-max="999999999" data-l-zero="deny" maxlength="12" autocomplete="off">
             </div>
-            <div id="bottomsavingsline">
-                <input type="checkbox" name="deposit" id="deposit">
-                <label for="deposit" class="button"></label>
-                <label for="deposit" class="savingsdeposit">Accumulation account</label>
+            <div id="bottomsavingsline" style="visibility: hidden">
+                <!--<input type="checkbox" name="deposit" id="deposit">-->
+                <!--<label for="deposit" class="button"></label>-->
+                <!--<label for="deposit" class="savingsdeposit">Accumulation account</label>-->
                 <span class="savingspercent">Interest</span>
                 <input type="text" name="percentvalue" id="percentvalue" data-a-sep="" data-v-min="0.00"
                        data-v-max="99.99" data-l-zero="deny" data-a-sign=" %" data-w-empty="sign" data-p-sign="s"
                        maxlength="5" data-a-pad="false" size="6" data-a-dec="." autocomplete="off">
-                <input type="checkbox" name="capitalization" id="capitalization">
-                <label for="capitalization" class="button"></label>
-                <label for="capitalization" class="savingscapital">Monthly capitalization</label>
+                <!--<input type="checkbox" name="capitalization" id="capitalization">-->
+                <!--<label for="capitalization" class="button"></label>-->
+                <!--<label for="capitalization" class="savingscapital">Monthly capitalization</label>-->
             </div>
         </div>
         <div id="savebutton">
@@ -177,6 +178,43 @@
     </div>
 
     <form action="user/save" id="saveoptions" method="post" autocomplete="off"></form>
+
+    <!-- SEND MESSAGE -->
+    <div id="send-message">
+        <div class="modal-content">
+            <div class="notes-title">Generate report</div>
+            <div class="modal-close">
+                <div class="close-sign"></div>
+            </div>
+            <div class="messages-send">
+                <div class="modal-save-icon"></div>
+                <div class="modal-save-text">Send report</div>
+            </div>
+
+            <div class="form-group" style="width: 300px; right: 400px; padding-top: 100px; display: inline-block">
+                <label for="sending">Select format file:</label>
+                <select class="form-control" id="sending">
+                    <option value="PDF">PDF Files</option>
+                    <option selected="selected" value="EXCEL">Excel File</option>
+                </select>
+                <label for="sending-period" style="padding-top: 10px">Select period:</label>
+                <select class="form-control" id="sending-period">
+                    <option value="YEAR">Per year</option>
+                    <option value="QUARTER">Per quarter</option>
+                    <option selected="selected" value="MONTH">Per month</option>
+                    <option value="DAY">Per day</option>
+                    <option value="HOUR">Per hour</option>
+                </select>
+                <label for="sending-currency" style="padding-top: 10px">Select period:</label>
+                <select class="form-control" id="sending-currency">
+                    <option value="UAH">grivnes</option>
+                    <option selected="selected" value="USD">dollars</option>
+                    <option value="EUR">euro</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
 
     <!-- NOTES WINDOW -->
     <div id="overlay"></div>
@@ -191,7 +229,6 @@
                 <div class="modal-save-text">Save changes</div>
             </div>
             <textarea id="notes" class="notes-input" autocomplete="off" maxlength="5000"></textarea>
-
         </div>
     </div>
     <!-- MODAL WINDOWS -->
@@ -202,11 +239,12 @@
             <div class="modal-close">
                 <div class="close-sign"></div>
             </div>
-            <input type="text" name="modalvalue" class="modalvalue" data-a-sep=" " data-v-min="0" data-v-max="999999999"
+            <input type="text" name="modalvalue" class="modalvalue" data-a-sep=" " data-v-min="0"
+                   data-v-max="999999999"
                    data-l-zero="deny" maxlength="12" autocomplete="off" value="0">
             <div class="modalselects">
                 <select class="modalcurrency">
-                    <option value="UA">grivnes</option>
+                    <option value="UAH">grivnes</option>
                     <option selected="selected" value="USD">dollars</option>
                     <option value="EUR">euro</option>
                 </select>
@@ -407,7 +445,7 @@
             <div class="triangle"></div>
         </div>
         <!--<div id="savingstitle" class="flag">Savings-->
-            <!--<div class="triangle"></div>-->
+        <!--<div class="triangle"></div>-->
         <!--</div>-->
 
         <div id="outermaindiv">
@@ -520,130 +558,130 @@
             </div>
         </div>
 
-        <div id="savings-slider-container">
+        <div id="savings-slider-container" style="visibility: hidden">
             <!--<span class="savings-slider">part of the spare money which you'll send to accumulation account every month:</span>-->
             <div id="savings-slider"></div>
-            <div id="savingsTip0">Without monthly deposit refill</div>
-            <div id="savingsTip100">All savings go to deposit every month</div>
+            <!--<div id="savingsTip0">Without monthly deposit refill</div>-->
+            <!--<div id="savingsTip100">All savings go to deposit every month</div>-->
         </div>
 
         <div class="SAVE">
-        <div id="savingscircles">
-            <div id="after-savings">
-                <div class="savings-circle-title lightcircletitle">In a year</div>
-                <div id="after-savings-value" class="boldcircletitle"></div>
-                </span>
-                <div class="savings-circle-currency boldcircletitle"></div>
+            <div id="savingscircles">
+                <div id="after-savings">
+                    <div class="savings-circle-title lightcircletitle">In a year</div>
+                    <div id="after-savings-value" class="boldcircletitle"></div>
+                    </span>
+                    <div class="savings-circle-currency boldcircletitle"></div>
+                </div>
+                <div id="before-savings">
+                    <div class="savings-circle-title lightcircletitle">At the moment</div>
+                    <div id="before-savings-value" class="boldcircletitle"></div>
+                    </span>
+                    <div class="savings-circle-currency boldcircletitle"></div>
+                </div>
             </div>
-            <div id="before-savings">
-                <div class="savings-circle-title lightcircletitle">At the moment</div>
-                <div id="before-savings-value" class="boldcircletitle"></div>
-                </span>
-                <div class="savings-circle-currency boldcircletitle"></div>
-            </div>
-        </div>
 
-        <div id="savingschart">
-            <canvas id="horizontal"></canvas>
-            <canvas id="chartline"></canvas>
-            <div id="month0">
-                <div class="small-month-circle"></div>
-                <div class="month-name"></div>
-                <div class="month-val"></div>
-            </div>
-            <div class="months">
-                <div id="month1" class="in-month">
+            <div id="savingschart">
+                <canvas id="horizontal"></canvas>
+                <canvas id="chartline"></canvas>
+                <div id="month0">
                     <div class="small-month-circle"></div>
                     <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month2" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month3" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month4" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month5" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></span></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month6" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="large-month-circle">
-                        <div class="bluedot"></div>
-                    </div>
-                    <div class="month-name"></div>
-                    <div class="large-month-val"><span class="val"></span> <span class="curr"></div>
                     <div class="month-val"></div>
                 </div>
-            </div>
-            <div class="months">
-                <div id="month7" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month8" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month9" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month10" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month11" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="month-name"></div>
-                    <div class="month-val"><span class="val"></span> <span class="curr"></div>
-                    </span></div>
-            </div>
-            <div class="months">
-                <div id="month12" class="in-month">
-                    <div class="small-month-circle"></div>
-                    <div class="large-month-circle">
-                        <div class="bluedot"></div>
+                <div class="months">
+                    <div id="month1" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month2" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month3" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month4" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month5" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></span></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month6" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="large-month-circle">
+                            <div class="bluedot"></div>
+                        </div>
+                        <div class="month-name"></div>
+                        <div class="large-month-val"><span class="val"></span> <span class="curr"></div>
+                        <div class="month-val"></div>
                     </div>
-                    <div class="month-name"></div>
-                    <div class="large-month-val"><span class="val"></span> <span class="curr"></div>
-                    <div class="month-val"></div>
+                </div>
+                <div class="months">
+                    <div id="month7" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month8" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month9" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month10" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month11" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="month-name"></div>
+                        <div class="month-val"><span class="val"></span> <span class="curr"></div>
+                        </span></div>
+                </div>
+                <div class="months">
+                    <div id="month12" class="in-month">
+                        <div class="small-month-circle"></div>
+                        <div class="large-month-circle">
+                            <div class="bluedot"></div>
+                        </div>
+                        <div class="month-name"></div>
+                        <div class="large-month-val"><span class="val"></span> <span class="curr"></div>
+                        <div class="month-val"></div>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </section>
@@ -713,11 +751,27 @@
 <script src="js/lib/jquery.min.js"></script>
 <script src="js/lib/touchscreens.js"></script>
 <script src="js/lib/extrascripts.js"></script>
+<!--<script src="js/lib/bootstrap.js"></script>-->
+<!--<script src="js/lib/bootstrap.min.js"></script>-->
+<!--<script src="js/lib/npm.js"></script>-->
 
 <script src="js/dashboard.js" charset="utf-8"></script>
 <script src="js/main.js" charset="utf-8"></script>
 <script src="js/login.js" charset="utf-8"></script>
 <script src="js/launch.js" charset="utf-8"></script>
+
+<!-- Latest compiled and minified CSS -->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+      <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+
+<!--&lt;!&ndash; Optional theme &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"-->
+      <!--integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+<!--&lt;!&ndash; Latest compiled and minified JavaScript &ndash;&gt;-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
+        <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"-->
+        <!--crossorigin="anonymous"></script>-->
 
 </body>
 </html>

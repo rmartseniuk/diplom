@@ -670,7 +670,7 @@ $(".initicons").click(function () {
 // MODAL: Turn off modal/notes window and reset all forms
 $("#overlay, .modal-close").click(turnOffModal);
 function turnOffModal() {
-    $("#overlay, #add-modal, #add-notes").removeClass("modal-show");
+    $("#overlay, #add-modal, #add-notes, #send-message").removeClass("modal-show");
     $(".modalincomessurface, .modalexpensessurface").fadeOut(150);
     setTimeout(function () {
         $(".modalvalue").val('0').hide();
@@ -867,9 +867,20 @@ $("#bubble").click(function () {
     $(".notes-input").show();
 });
 
+$("#bubble-message").click(function () {
+    $("#overlay, #send-message").addClass("modal-show");
+    // $(".notes-input").show();
+});
+
 // NOTES: save button handler
 $(".notes-save").click(function () {
     user.notes = $("textarea#notes").val();
+    turnOffModal();
+    jsonDataSave();
+});
+
+//SEND MESSAGE
+$(".messages-send").click(function () {
     turnOffModal();
     jsonDataSave();
 });

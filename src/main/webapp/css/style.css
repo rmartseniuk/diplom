@@ -100,7 +100,7 @@ input[type="text"], input[type="password"], textarea {
 }
 *:focus {outline:0px none transparent;}
 
-#bubble, #indicator, #save, #piggyicon, #rublesign, .arrowup, .arrowdown, .incomes-sprite-title, .close-sign, .modal-save-icon, #modaldeletecross, .initicons-arrow, .expenses-sprite-title, .savings-sprite-title, .triangle, .noUi-handle, .noUi-handle:after  {
+#bubble, #bubble-message, #indicator, #save, #piggyicon, #rublesign, .arrowup, .arrowdown, .incomes-sprite-title, .close-sign, .modal-save-icon, #modaldeletecross, .initicons-arrow, .expenses-sprite-title, .savings-sprite-title, .triangle, .noUi-handle, .noUi-handle:after  {
 	background-size: 538px 84px;
 }
 #chooseicon, .itembackground, .iconbox, .itemlinebackground, #circle-select-1-back, #circle-select-2-back, #circle-select-3-back {
@@ -265,6 +265,18 @@ only screen and (min-resolution: 144dpi) {
 	cursor: pointer;
 	display: none;
 }
+
+#bubble-message {
+	position: absolute;
+	top:-20px;
+	right: -60px;
+	background: url('../images/sprites.png') no-repeat -450px -1px;
+	width: 53px;
+	height: 51px;
+	cursor: pointer;
+	display: none;
+}
+
 #indicator {
 	position: absolute;
 	background-position: -280px 0;
@@ -1088,6 +1100,33 @@ input#deposit:checked + label.button:after, input#capitalization:checked + label
 	animation: 0.8s frameanimate ease-out;
 }
 
+/*SEND MESSAGE*/
+
+#send-message {
+	visibility: hidden;
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	margin: auto;
+	width: 465px;
+	height: 530px;
+	z-index: 2000;
+	opacity: 1;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-perspective: 1300;
+	-o-perspective: 1300px;
+	-ms-perspective: 1300px;
+	-moz-perspective: 1300px;
+	perspective: 1300;
+}
+
+#send-message >.modal-content {
+	height: 610px;
+}
+
 /* NOTES WINDOW */
 
 #add-notes {
@@ -1113,6 +1152,7 @@ input#deposit:checked + label.button:after, input#capitalization:checked + label
 #add-notes >.modal-content {
 	height: 610px;
 }
+
 .notes-title {
 	font-weight: 900;
 	font-family: "Museo-500";
@@ -1140,6 +1180,24 @@ input#deposit:checked + label.button:after, input#capitalization:checked + label
 .notes-save:active, .modal-save:active {
 	background-color: #e0edf0;
 }
+
+.messages-send {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 42px;
+	bottom: 20px;
+	background-color: #cce5ec;
+	cursor: pointer;
+	line-height: 30px;
+}
+.messages-send:hover, .modal-save:hover {
+	background-color: #d6ebf1;
+}
+.messages-send:active, .modal-save:active {
+	background-color: #e0edf0;
+}
+
 .notes-input {
 	line-height: 20px;
 	display: none;
@@ -2701,6 +2759,9 @@ input#deposit:checked + label.button:after, input#capitalization:checked + label
 	#add-notes >.modal-content {
 		height: 530px;
 	}
+	#send-message >.modal-content {
+		height: 530px;
+	}
 	.notes-input {
 		height: 56%
 	}
@@ -2721,7 +2782,9 @@ input#deposit:checked + label.button:after, input#capitalization:checked + label
 		right: -70px;
 	}
 
-	
+	#bubble-message {
+		left: -70px;
+	}
 
 	#savebutton {
 		bottom: 1%;
